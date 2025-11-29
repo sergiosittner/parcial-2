@@ -162,9 +162,6 @@ def seleccionar_categoria(dados, planilla):
         return 
     
 
-#----------------------------------(FUNCION ESTADISTICAS)---------------------------------------
-def estadisticas():
-    pass
 
 #----------------------------------(FUNCION CREDITOS)-------------------------------------------
 def creditos():
@@ -176,6 +173,59 @@ def creditos():
     print("Carrera: Tecnicatura Universitaria en Programación")
     print("Contacto: sergiosittner05@gmail.com o [falta agregar otro mail]")
 
+#----------------------------------(FUNCION ANOTAR NOMBRE Y PUNTOS EN CSV)----------------------------
+def guardar_puntaje(nombre, puntos):
+    with open("estadisticas.txt", "a") as archivo:
+        archivo.write(f"{nombre},{puntos}\n") 
+    print("\nPuntaje guardado correctamente.")
+
+#---------------------------------------(LEER NOMBRES Y PUNTOS DEL ARCHIVO CSV)---------------------------
+'''''
+def estadisticas():
+    print("\n======= ESTADÍSTICAS =======")
+
+    archivo = open("estadisticas.txt", "r")
+    contenido = archivo.read()
+    archivo.close()
+
+    if contenido.strip() == "":
+        print("Todavía no hay partidas registradas.")
+    else:
+        print(contenido)
+
+    print("============================\n")
+'''
+
+def estadisticas():
+    print("\n======= TABLA DE POSICIONES =======")
+    lista_jugadores = []
+    
+
+    with open("estadisticas.txt", "r") as archivo:
+        for linea in archivo:
+
+            datos = linea.strip().split(",")
+            
+            if len(datos) == 2:
+                nombre = datos[0]
+                puntos_texto = datos[1]
+                
+                if puntos_texto.isdigit(): 
+                    puntos = int(puntos_texto)
+                    lista_jugadores.append((nombre, puntos))
+    n = len(lista_jugadores)
+
+    for i in range(n):
+        for j in range(0, n - i - 1):
+            if lista_jugadores[j][1] < lista_jugadores[j+1][1]:
+                x = lista_jugadores[j]
+                lista_jugadores[j] = lista_jugadores[j+1]
+                lista_jugadores[j+1] = x
+
+    for i, (nombre, puntos) in enumerate(lista_jugadores[:10], start=1):
+        print(f"{i}°. {nombre:<15} | {puntos} puntos")
+
+    print("===========================================\n")
 #--------------------------------(FUNCION MENU)---------------------------------------------------
 
 def menu():
@@ -220,6 +270,9 @@ def menu():
                 turnos_jugados += 1
                 
             print(f"\n¡JUEGO TERMINADO! PUNTAJE FINAL: {puntos_totales}")
+            
+            nombre = input("Ingrese su nombre para guardar el puntaje: ")
+            guardar_puntaje(nombre, puntos_totales)
 
         elif opcion == "2":
             estadisticas()

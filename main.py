@@ -31,7 +31,7 @@ def menu():
 
 
 def mostrar_menu():
-    print("=============== \n MINI GENERALA \n===============")
+    print("=============== \n MENU GENERALA \n===============")
     print("1) Jugar")
     print("2) Estadísticas")
     print("3) Créditos")
@@ -45,6 +45,17 @@ def tirar_dados(numero_de_dados, cara_inicial, cara_final):
 
     print(f"Tirada de dados: {lista_auxiliar}")
     return lista_auxiliar
+
+def validar_repeticion_de_posicion(usadas, posicion):
+    while posicion in usadas:
+        posicion = int(input("Esa posicion ya fue usada. Elija otra: "))
+    
+    return posicion
+
+#def validar_posicion(posicion, posicion_inicial, posicion_final):
+    #while posicion < posicion_inicial or posicion > posicion_final:
+        #posicion = int(input("Posición fuera del rango. Ingrese nuevamente: "))
+    #return posicion
 
 
 def elegir_dados(lista_auxiliar):
@@ -66,15 +77,13 @@ def elegir_dados(lista_auxiliar):
         posicion = int(posicion)
 
 
-        if posicion < 0 or posicion >= len(lista_auxiliar):
-            print("Posición fuera de rango.")
-            continue
+        #if posicion < 0 or posicion >= len(lista_auxiliar):
+            #print("Posición fuera de rango.")
+            #continue
 
 
-        if posicion in posiciones_usadas:
-            print("Esa posición ya fue elegida.")
-            continue
-
+        posicion = validar_repeticion_de_posicion(posiciones_usadas, int(posicion))
+        #posicion = validar_posicion(posiciones_usadas, int(posicion))
 
         posiciones_usadas.add(posicion)
         dados_elegidos.append(lista_auxiliar[posicion])
@@ -105,14 +114,6 @@ def armar_lista_final(tiros, numero_de_dados, cara_inicial, cara_final):
         lista_final.extend(elegidos)
 
     return lista_final
-
-
-
-def validar_posicion(posicion, posicion_inicial, posicion_final):
-    while posicion < posicion_inicial or posicion > posicion_final:
-        posicion = int(input("Posición fuera del rango. Ingrese nuevamente: "))
-    return posicion
-
 
 
 def estadisticas():

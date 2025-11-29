@@ -1,5 +1,5 @@
 import random
-
+from categorias import *
 
 def menu():
     while True:
@@ -46,74 +46,82 @@ def tirar_dados(numero_de_dados, cara_inicial, cara_final):
     print(f"Tirada de dados: {lista_auxiliar}")
     return lista_auxiliar
 
-def validar_repeticion_de_posicion(usadas, posicion):
-    while posicion in usadas:
-        posicion = int(input("Esa posicion ya fue usada. Elija otra: "))
-    
-    return posicion
-
-#def validar_posicion(posicion, posicion_inicial, posicion_final):
-    #while posicion < posicion_inicial or posicion > posicion_final:
-        #posicion = int(input("Posición fuera del rango. Ingrese nuevamente: "))
-    #return posicion
 
 
 def elegir_dados(lista_auxiliar):
 
+    entrada = input("Ingrese posiciones a conservar (ej: 0,2,4), o ENTER para no conservar: ")
+
+
+    if entrada.strip() == "":
+        return []
+
+
+    partes = entrada.split(",")
+
     dados_elegidos = []
-    posiciones_usadas = set()  
+    posiciones_usadas = []
 
-    for i in range(len(lista_auxiliar)):
+    for p in partes:
 
-        posicion = input(f"Ingrese posición que desea conservar (0-{len(lista_auxiliar)-1}), o ENTER para no conservar: ")
+        p = p.strip() 
 
-        if posicion == "":
+
+        if not p.isdigit():
+            print(f"'{p}' no es un número válido.")
             continue
 
-        if not posicion.isdigit():
-            print("Entrada inválida.")
+        posicion = int(p)
+
+
+        if posicion < 0 or posicion >= len(lista_auxiliar):
+            print(f"La posición {posicion} está fuera del rango.")
             continue
 
-        posicion = int(posicion)
 
+        if posicion in posiciones_usadas:
+            print(f"La posición {posicion} ya fue usada.")
+            continue
 
-        #if posicion < 0 or posicion >= len(lista_auxiliar):
-            #print("Posición fuera de rango.")
-            #continue
-
-
-        posicion = validar_repeticion_de_posicion(posiciones_usadas, int(posicion))
-        #posicion = validar_posicion(posiciones_usadas, int(posicion))
-
-        posiciones_usadas.add(posicion)
+        posiciones_usadas.append(posicion)
         dados_elegidos.append(lista_auxiliar[posicion])
 
-        print("Elegidos hasta ahora:", dados_elegidos)
-
+    print("Dados elegidos:", dados_elegidos)
     return dados_elegidos
 
 
 
 def armar_lista_final(tiros, numero_de_dados, cara_inicial, cara_final):
-
     lista_final = []
-
+    
     while tiros > 0:
-        lista_aux = tirar_dados(numero_de_dados, cara_inicial, cara_final)
-        elegidos = elegir_dados(lista_aux)
 
-        lista_final.extend(elegidos)
-        numero_de_dados -= len(elegidos)
-        tiros -= 1
+        dados_a_tirar = 5 - len(lista_final)
+        
+
+        lista_auxiliar = tirar_dados(dados_a_tirar, cara_inicial, cara_final)
 
 
-    while len(lista_final) < 5:
-        print("Aún faltan elegir dados. Última tirada repetida:")
-        lista_aux = tirar_dados(5 - len(lista_final), cara_inicial, cara_final)
-        elegidos = elegir_dados(lista_aux)
-        lista_final.extend(elegidos)
+        if tiros == 1:
+
+            lista_final.extend(lista_auxiliar)
+            print(f"Último tiro completado. Dados finales: {lista_final}")
+            break 
+
+
+        else:
+
+            dados_elegidos = elegir_dados(lista_auxiliar)
+            lista_final.extend(dados_elegidos)
+
+
+            if len(lista_final) == 5:
+                break
+        
+        tiros = tiros - 1
 
     return lista_final
+
 
 
 def estadisticas():

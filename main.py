@@ -180,21 +180,6 @@ def guardar_puntaje(nombre, puntos):
     print("\nPuntaje guardado correctamente.")
 
 #---------------------------------------(LEER NOMBRES Y PUNTOS DEL ARCHIVO CSV)---------------------------
-'''''
-def estadisticas():
-    print("\n======= ESTADÍSTICAS =======")
-
-    archivo = open("estadisticas.txt", "r")
-    contenido = archivo.read()
-    archivo.close()
-
-    if contenido.strip() == "":
-        print("Todavía no hay partidas registradas.")
-    else:
-        print(contenido)
-
-    print("============================\n")
-'''
 
 def estadisticas():
     print("\n======= TABLA DE POSICIONES =======")

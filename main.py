@@ -1,4 +1,5 @@
 import random
+import pygame
 from categorias import *
 
 #----------------------------(FUNCIÓN PARA VER UN MENU)-------------------------------------------------
@@ -171,7 +172,7 @@ def creditos():
     print("Materia: Programación 1")
     print("Docentes: Martin Alejandro y Veronica Carbonari")
     print("Carrera: Tecnicatura Universitaria en Programación")
-    print("Contacto: sergiosittner05@gmail.com o [falta agregar otro mail]")
+    print("Contacto: sergiosittner05@gmail.com")
 
 #----------------------------------(FUNCION ANOTAR NOMBRE Y PUNTOS EN CSV)----------------------------
 def guardar_puntaje(nombre, puntos):

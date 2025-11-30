@@ -175,7 +175,7 @@ def creditos():
 
 #----------------------------------(FUNCION ANOTAR NOMBRE Y PUNTOS EN CSV)----------------------------
 def guardar_puntaje(nombre, puntos):
-    with open("estadisticas.txt", "a") as archivo:
+    with open("estadisticas.csv", "a") as archivo:
         archivo.write(f"{nombre},{puntos}\n") 
     print("\nPuntaje guardado correctamente.")
 
@@ -186,7 +186,7 @@ def estadisticas():
     lista_jugadores = []
     
 
-    with open("estadisticas.txt", "r") as archivo:
+    with open("estadisticas.csv", "r") as archivo:
         for linea in archivo:
 
             datos = linea.strip().split(",")

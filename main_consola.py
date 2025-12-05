@@ -47,7 +47,6 @@ def menu():
                 cara_inicial = 1
                 cara_final = 6
 
-
                 resultado_dados = armar_lista_final(tiros, numero_de_dados, cara_inicial, cara_final)
                 print(f"\nDados finales del turno: {resultado_dados}")
                 

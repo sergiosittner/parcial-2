@@ -8,51 +8,55 @@ def tirar_dados(numero_de_dados, cara_inicial, cara_final):
     for i in range(numero_de_dados):
         lista_auxiliar.append(random.randint(cara_inicial, cara_final))
 
-    print(f"Tirada de dados: {lista_auxiliar}")
     return lista_auxiliar
+
+    #print(f"Tirada de dados: {lista_auxiliar}")
+    #return lista_auxiliar
 
 #-------------------(FUNCIÓN PARA ELEGIR DADOS)-----------------------------------------------------
 
 def elegir_dados(lista_auxiliar):
+    
+    while True:
 
-    entrada = input("Ingrese posiciones a conservar (ej: 0,2,4), o ENTER para no conservar: ")
+        print("\n--- Dados Disponibles ---")
+        for i, valor in enumerate(lista_auxiliar):
+            print(f"{i + 1}) {valor}")
 
+        entrada = input("Ingrese posiciones a conservar (ej: 1,3,5), o ENTER para no conservar: ")
 
-    if entrada.strip() == "":
-        return []
+        if entrada.strip() == "":
+            return []
 
+        partes = entrada.split(",")
+        dados_elegidos = []
+        posiciones_usadas = []
 
-    partes = entrada.split(",")
+#------------- Ciclio for para comprobar errores ----------
+        for p in partes:
+            p = p.strip()
 
-    dados_elegidos = []
-    posiciones_usadas = []
+            if not p.isdigit():
+                print(f"Error: '{p}' no es un número válido.")
+                break
 
-    for p in partes:
+            posicion = int(p) - 1
 
-        p = p.strip() 
+            if posicion < 0 or posicion >= len(lista_auxiliar):
+                print(f"Error: La posición {posicion + 1} está fuera del rango.")
+                break 
 
+            if posicion in posiciones_usadas:
+                print(f"Error: La posición {posicion + 1} ya fue usada.")
+                break 
 
-        if not p.isdigit():
-            print(f"'{p}' no es un número válido.")
-            continue
+            posiciones_usadas.append(posicion)
+            dados_elegidos.append(lista_auxiliar[posicion])
+        
+        else:
 
-        posicion = int(p)
-
-
-        if posicion < 0 or posicion >= len(lista_auxiliar):
-            print(f"La posición {posicion} está fuera del rango.")
-            continue
-
-
-        if posicion in posiciones_usadas:
-            print(f"La posición {posicion} ya fue usada.")
-            continue
-
-        posiciones_usadas.append(posicion)
-        dados_elegidos.append(lista_auxiliar[posicion])
-
-    print("Dados elegidos:", dados_elegidos)
-    return dados_elegidos
+            print("Dados elegidos:", dados_elegidos)
+            return dados_elegidos
 
 
 #-----------------------------------(FUNCIÓN PARA AGRUPAR LOS DADOS ELEGIDOS)---------------------------------
